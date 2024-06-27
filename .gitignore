@@ -1,1 +1,3 @@
-api/data/
+website/data/*
+*.tgz
+publications/
