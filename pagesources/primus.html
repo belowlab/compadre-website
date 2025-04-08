@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="shortcut icon" href="../images/primus_icon.png"> 
+<title>PRIMUS Documentation</title>
+<script type="text/javascript" language="javascript" src="../scripts/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="../scripts/jquery-ui.min.js"></script>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
+<link href="../css/jquery-ui.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" language="javascript" src="../scripts/menu.js"></script>
+<script type="text/javascript" language="javascript" src="../scripts/defaults.js"></script>
+<script type="text/javascript" language="javascript" src="../scripts/footer.js"></script>
+
+<script>
+$(function() {
+	createOtherPageMenu();
+    $( "#menu" ).menu();
+});
+
+</script>
+
+</head>
+<body>
+<table  id="main_table">
+<tbody>
+<tr>
+
+<td style="vertical-align: top;">
+<div id="menuDiv">
+<!-- menu created in menu.js -->
+</div>
+</td>
+
+<td style="vertical-align: top;">
+<div class="default">
+	<a href="../index.html" style="float: left; border: none;">
+  		<img src="../images/primus_icon.png" alt="Primus Home">
+	</a>
+<h3 style="padding-left: 5em">Documentation</h3><br/>
+	<div id="main_content" style="overflow: auto;">
+<!-- 	insert content here -->
+	Use the -h or --man command line option when running PRIMUS to get the help menu and documentation.<br>
+	
+	<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a></li>
+  <li><a href="#DOCUMENTATION">DOCUMENTATION</a>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#For-usage-and-documentation">For usage and documentation:</a></li>
+          <li><a href="#Required-one-of-the-following">Required (one of the following):</a></li>
+          <li><a href="#or-both-of-the-following">(or both of the following):</a></li>
+          <li><a href="#General-Options">General Options:</a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#PLINK-IBD-estimation-not-included-in-lite-version">PLINK IBD estimation (not included in lite version)</a></li>
+          <li><a href="#Identification-of-maximum-unrelated-set-options">Identification of maximum unrelated set options:</a></li>
+          <li><a href="#Pedigree-reconstruction-options">Pedigree reconstruction options:</a></li>
+          <li><a href="#PRIMUS-ERSA-options">PRIMUS+ERSA options:</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#DEFINITIONS">DEFINITIONS</a></li>
+  <li><a href="#OUTPUT-FILES">OUTPUT FILES</a>
+    <ul>
+      <li><a href="#Identification-of-a-Maximum-Unrelated-Set">Identification of a Maximum Unrelated Set</a></li>
+      <li><a href="#Pedigree-Reconstruction">Pedigree Reconstruction</a></li>
+    </ul>
+  </li>
+  <li><a href="#QUICK-START">QUICK START</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>run_PRIMUS.pl - Run an IBD file through PRIMUS</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>run_PRIMUS.pl</b> [<i>options</i>] -p <i>file</i> | -i FILE=<i>file</i> [<i>options</i>] | -h</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>run_PRIMUS.pl</b> will read genome-wide IBD estimates and will identify a maximum unrelated set and/or all possible pedigrees for each family within the dataset. You may weight the selection of your unrelated set by loading in files containing values on which to weight. For pedigree reconstruction, you may also load information on sex, age, and affection status for each sample. PRIMUS is also able to generate IBD estimates for SNP data in PLINK input file formats (ped/map or bed/bim/fam) as long as the system also has the following software installed: R, PLINK, and EIGENSTRAT&#39;s smartpca executable.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<pre><code> <span class="variable">For</span> <span class="variable">usage</span> <span class="keyword">and</span> <span class="variable">documentation</span><span class="operator">:</span>
+   <span class="operator">-</span><span class="variable">h</span><span class="operator">,</span> <span class="operator">--</span><span class="variable">help</span>           <span class="variable">Brief</span> <span class="variable">help</span> <span class="variable">message</span>
+   <span class="operator">--</span><span class="variable">man</span>                <span class="variable">Full</span> <span class="variable">documentation</span>
+ 
+ 
+ <span class="variable">Required</span> <span class="keyword">for</span> <span class="variable">prePRIMUS</span><span class="operator">,</span> <span class="variable">IMUS</span><span class="operator">,</span> <span class="keyword">and</span> <span class="variable">PR</span> <span class="operator">(</span><span class="variable">one</span> <span class="variable">of</span> <span class="variable">the</span> <span class="variable">following</span><span class="operator">):</span>
+   <span class="keyword">-p</span><span class="operator">,</span> <span class="operator">--</span><span class="variable">plink_ibd</span>      <span class="variable">Specify</span> <span class="variable">path</span> <span class="variable">to</span> <span class="variable">a</span> <span class="operator">.</span><span class="variable">genome</span> <span class="variable">IBD</span> <span class="variable">estimates</span> <span class="variable">file</span> <span class="variable">produced</span> <span class="variable">by</span> <span class="variable">PLINK</span>
+   <span class="operator">-</span><span class="variable">i</span><span class="operator">,</span> <span class="operator">--</span><span class="variable">input</span>          <span class="variable">Specify</span> <span class="variable">path</span> <span class="variable">to</span> <span class="variable">an</span> <span class="variable">IBD</span> <span class="variable">estimates</span> <span class="variable">file</span> <span class="keyword">and</span> <span class="variable">additional</span> <span class="variable">column</span> <span class="variable">information</span>
+   
+   <span class="operator">(</span><span class="keyword">or</span> <span class="variable">both</span><span class="operator">):</span>
+   <span class="operator">--</span><span class="variable">file</span>               <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">PLINK</span> <span class="variable">formatted</span> <span class="variable">data</span> <span class="variable">without</span> <span class="variable">the</span> <span class="variable">file</span> <span class="variable">extensions</span><span class="operator">;</span> <span class="variable">behaves</span> <span class="variable">the</span> <span class="variable">same</span> <span class="variable">as</span> <span class="variable">in</span> <span class="variable">PLINK</span> <span class="operator">(</span><span class="variable">requires</span> <span class="operator">--</span><span class="variable">genome</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">genome</span>             <span class="variable">Read</span> <span class="variable">in</span> <span class="operator">--</span><span class="variable">file</span> <span class="keyword">and</span> <span class="variable">calculate</span> <span class="variable">IBD</span> <span class="variable">estimates</span> <span class="variable">using</span> <span class="variable">PLINK</span>
+ 
+ <span class="variable">General</span> <span class="variable">options</span><span class="operator">:</span>
+   <span class="keyword">-t</span><span class="operator">,</span> <span class="operator">--</span><span class="variable">rel_threshold</span>  <span class="variable">Set</span> <span class="variable">the</span> <span class="variable">minimum</span> <span class="variable">level</span> <span class="variable">of</span> <span class="variable">relatedness</span> <span class="keyword">for</span> <span class="variable">two</span> <span class="variable">people</span> <span class="variable">to</span> <span class="variable">be</span> <span class="variable">considered</span> <span class="variable">related</span> <span class="operator">(</span><span class="keyword">default</span><span class="operator">=</span><span class="number">0</span><span class="operator">.</span><span class="number">1</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">degree_rel_cutoff</span>  <span class="variable">Set</span> <span class="variable">the</span> <span class="variable">maximum</span> <span class="variable">degree</span> <span class="variable">of</span> <span class="variable">relatedness</span> <span class="keyword">for</span> <span class="variable">two</span> <span class="variable">people</span> <span class="variable">to</span> <span class="variable">be</span> <span class="variable">considered</span> <span class="variable">related</span> <span class="operator">(</span><span class="keyword">default</span><span class="operator">=</span><span class="number">3</span><span class="operator">;</span> <span class="variable">i</span><span class="operator">.</span><span class="variable">e</span><span class="operator">.</span> <span class="number">3</span><span class="variable">rd</span> <span class="variable">degree</span> <span class="variable">relatives</span><span class="operator">)</span>
+   <span class="keyword">-o</span><span class="operator">,</span> <span class="operator">--</span><span class="variable">output_dir</span>     <span class="variable">Specify</span> <span class="variable">path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">output</span> <span class="variable">directory</span> <span class="keyword">for</span> <span class="variable">all</span> <span class="variable">results</span><span class="operator">(</span><span class="keyword">default</span><span class="operator">=</span><span class="operator">[</span><span class="variable">PATH_TO_IBD_FILE</span><span class="operator">]</span><span class="variable">_PRIMUS</span><span class="operator">/)</span>
+   <span class="operator">-</span><span class="variable">v</span><span class="operator">,</span> <span class="operator">--</span><span class="variable">verbose</span>        <span class="variable">Set</span> <span class="variable">verbosity</span> <span class="variable">level</span> <span class="operator">(</span><span class="number">0</span><span class="operator">=</span><span class="variable">none</span><span class="operator">;</span> <span class="number">1</span><span class="operator">=</span><span class="keyword">default</span><span class="operator">;</span> <span class="number">2</span><span class="operator">=</span><span class="variable">more</span><span class="operator">;</span> <span class="number">3</span><span class="operator">=</span><span class="variable">max</span><span class="operator">)</span>
+ 
+ <span class="variable">prePRIMUS</span> <span class="variable">IBD</span> <span class="variable">estimation</span> <span class="variable">using</span> <span class="variable">PLINK</span> <span class="operator">(</span><span class="keyword">not</span> <span class="variable">included</span> <span class="variable">in</span> <span class="variable">lite</span> <span class="variable">version</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">file</span>               <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">PLINK</span> <span class="variable">formatted</span> <span class="variable">data</span> <span class="variable">without</span> <span class="variable">the</span> <span class="variable">file</span> <span class="variable">extensions</span><span class="operator">;</span> <span class="variable">behaves</span> <span class="variable">the</span> <span class="variable">same</span> <span class="variable">as</span> <span class="variable">in</span> <span class="variable">PLINK</span> <span class="operator">(</span><span class="variable">requires</span> <span class="operator">--</span><span class="variable">genome</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">genome</span>             <span class="variable">Read</span> <span class="variable">in</span> <span class="variable">the</span> <span class="variable">specified</span> <span class="variable">PLINK</span> <span class="variable">fornated</span> <span class="variable">data</span> <span class="variable">file</span> <span class="keyword">and</span> <span class="variable">calculate</span> <span class="variable">IBD</span> <span class="variable">estimates</span> <span class="variable">using</span> <span class="variable">PLINK</span>
+   <span class="operator">--</span><span class="variable">plink_ex</span>           <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">plink</span> <span class="variable">executable</span> <span class="variable">file</span> <span class="operator">(</span><span class="variable">searches</span> <span class="variable">environment</span> <span class="variable">variables</span> <span class="variable">by</span> <span class="keyword">default</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">smartpca_ex</span>        <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">EIGENSTRAT's</span> <span class="variable">smartpca</span> <span class="variable">executable</span> <span class="variable">file</span> <span class="operator">(</span><span class="variable">searches</span> <span class="variable">environment</span> <span class="variable">variables</span> <span class="variable">by</span> <span class="keyword">default</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">ref_pops</span>           <span class="variable">Comma</span> <span class="variable">separated</span> <span class="variable">list</span> <span class="variable">of</span> <span class="variable">HapMap3</span> <span class="variable">populations</span> <span class="variable">used</span> <span class="keyword">for</span> <span class="variable">reference</span> <span class="variable">allele</span> <span class="variable">freqs</span> <span class="operator">(</span><span class="variable">overrides</span> <span class="keyword">default</span> <span class="variable">method</span><span class="operator">)</span> 
+   <span class="operator">--</span><span class="variable">no_automatic</span>       <span class="variable">Turn</span> <span class="variable">off</span> <span class="variable">automatic</span> <span class="variable">selection</span> <span class="variable">of</span> <span class="variable">the</span> <span class="variable">HapMap3</span> <span class="variable">populations</span> <span class="keyword">for</span> <span class="variable">reference</span> <span class="variable">allele</span> <span class="variable">freqs</span> <span class="operator">(</span><span class="variable">On</span> <span class="variable">by</span> <span class="keyword">default</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">remove_AIMs</span>        <span class="variable">Automatically</span> <span class="variable">remove</span> <span class="variable">ancestry</span> <span class="variable">informative</span> <span class="variable">markers</span> <span class="operator">(</span><span class="variable">off</span> <span class="variable">by</span> <span class="keyword">default</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">keep_AIMs</span>          <span class="variable">Do</span> <span class="keyword">not</span> <span class="variable">remove</span> <span class="variable">ancestry</span> <span class="variable">informative</span> <span class="variable">markers</span><span class="operator">(</span><span class="variable">off</span> <span class="variable">by</span> <span class="keyword">default</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">internal_ref</span>       <span class="variable">Use</span> <span class="variable">the</span> <span class="variable">dataset</span> <span class="variable">provided</span> <span class="variable">in</span> <span class="operator">--</span><span class="variable">file</span> <span class="variable">to</span> <span class="variable">get</span> <span class="variable">reference</span> <span class="variable">allele</span> <span class="variable">frequencies</span>
+   <span class="operator">--</span><span class="variable">alt_ref_stem</span>       <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">PLINK</span> <span class="variable">formatted</span> <span class="variable">data</span> <span class="operator">(</span><span class="keyword">no</span> <span class="variable">file</span> <span class="variable">extensions</span><span class="operator">)</span> <span class="variable">used</span> <span class="keyword">for</span> <span class="variable">allele</span> <span class="variable">frequencies</span>
+   <span class="operator">--</span><span class="variable">no_PCA_plot</span>        <span class="variable">Will</span> <span class="keyword">not</span> <span class="variable">run</span> <span class="variable">smartpca</span> <span class="keyword">or</span> <span class="variable">generate</span> <span class="variable">the</span> <span class="variable">PCA</span> <span class="variable">plot</span>
+   <span class="operator">--</span><span class="variable">keep_inter_files</span>   <span class="variable">Keep</span> <span class="variable">intermediate</span> <span class="variable">files</span> <span class="variable">used</span> <span class="variable">to</span> <span class="variable">create</span> <span class="variable">the</span> <span class="variable">IBD</span> <span class="variable">estimates</span> <span class="variable">with</span> <span class="variable">prePRIMUS</span>
+ 
+ <span class="variable">Identification</span> <span class="variable">of</span> <span class="variable">maximum</span> <span class="variable">unrelated</span> <span class="variable">set</span> <span class="variable">options</span><span class="operator">:</span>
+   <span class="operator">--</span><span class="variable">no_IMUS</span>            <span class="variable">Don't</span> <span class="variable">identify</span> <span class="variable">a</span> <span class="variable">maximum</span> <span class="variable">unrelated</span> <span class="variable">set</span> <span class="operator">(</span><span class="variable">runs</span> <span class="variable">IMUS</span> <span class="variable">by</span> <span class="keyword">default</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">missing_val</span>        <span class="variable">Set</span> <span class="variable">value</span> <span class="variable">that</span> <span class="variable">denotes</span> <span class="variable">missing</span> <span class="variable">data</span> <span class="variable">in</span> <span class="variable">IBD</span> <span class="variable">file</span>
+   <span class="keyword">-s</span><span class="operator">,</span> <span class="operator">--</span><span class="variable">size</span>           <span class="variable">Specify</span> <span class="variable">to</span> <span class="variable">weight</span> <span class="variable">on</span> <span class="variable">set</span> <span class="variable">size</span> <span class="operator">(</span><span class="variable">Default</span> <span class="keyword">unless</span> <span class="variable">a</span> <span class="variable">binary</span> <span class="variable">trait</span> <span class="variable">is</span> <span class="variable">specified</span> <span class="variable">first</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">high_btrait</span>        <span class="variable">File</span> <span class="variable">with</span> <span class="variable">FID</span><span class="operator">,</span> <span class="variable">IID</span><span class="operator">,</span> <span class="keyword">and</span> <span class="variable">binary</span> <span class="variable">trait</span> <span class="variable">to</span> <span class="variable">weight</span> <span class="keyword">for</span> <span class="variable">the</span> <span class="variable">higher</span> <span class="variable">value</span>
+   <span class="operator">--</span><span class="variable">low_btrait</span>         <span class="variable">File</span> <span class="variable">with</span> <span class="variable">FID</span><span class="operator">,</span> <span class="variable">IID</span><span class="operator">,</span> <span class="keyword">and</span> <span class="variable">binary</span> <span class="variable">trait</span> <span class="variable">to</span> <span class="variable">weight</span> <span class="keyword">for</span> <span class="variable">the</span> <span class="variable">lower</span> <span class="variable">value</span>
+   <span class="operator">--</span><span class="variable">high_qtrait</span>        <span class="variable">File</span> <span class="variable">with</span> <span class="variable">FID</span><span class="operator">,</span> <span class="variable">IID</span><span class="operator">,</span> <span class="keyword">and</span> <span class="variable">quantitative</span> <span class="variable">trait</span> <span class="variable">to</span> <span class="variable">weight</span> <span class="keyword">for</span> <span class="variable">higher</span> <span class="keyword">values</span>
+   <span class="operator">--</span><span class="variable">low_qtrait</span>         <span class="variable">File</span> <span class="variable">with</span> <span class="variable">FID</span><span class="operator">,</span> <span class="variable">IID</span><span class="operator">,</span> <span class="keyword">and</span> <span class="variable">quantitative</span> <span class="variable">trait</span> <span class="variable">to</span> <span class="variable">weight</span> <span class="keyword">for</span> <span class="variable">lower</span> <span class="keyword">values</span>
+   <span class="operator">--</span><span class="variable">mean_qtrait</span>        <span class="variable">File</span> <span class="variable">with</span> <span class="variable">FID</span><span class="operator">,</span> <span class="variable">IID</span><span class="operator">,</span> <span class="keyword">and</span> <span class="variable">quantitative</span> <span class="variable">trait</span> <span class="variable">to</span> <span class="variable">weight</span> <span class="variable">towards</span> <span class="variable">the</span> <span class="variable">mean</span> <span class="variable">value</span>
+   <span class="operator">--</span><span class="variable">tails_qtrait</span>       <span class="variable">File</span> <span class="variable">with</span> <span class="variable">FID</span><span class="operator">,</span> <span class="variable">IID</span><span class="operator">,</span> <span class="keyword">and</span> <span class="variable">quantitative</span> <span class="variable">trait</span> <span class="variable">to</span> <span class="variable">weight</span> <span class="variable">against</span> <span class="variable">the</span> <span class="variable">middle</span> <span class="keyword">values</span>
+ 
+ <span class="variable">Pedigree</span> <span class="variable">reconstruction</span> <span class="variable">options</span><span class="operator">:</span>
+   <span class="operator">--</span><span class="variable">no_PR</span>              <span class="variable">Don't</span> <span class="variable">reconstruct</span> <span class="variable">pedigrees</span> <span class="operator">(</span><span class="variable">runs</span> <span class="variable">pedigree</span> <span class="variable">reconstruction</span> <span class="variable">by</span> <span class="keyword">default</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">max_gens</span>           <span class="variable">Max</span> <span class="variable">number</span> <span class="variable">of</span> <span class="variable">generations</span> <span class="variable">sampled</span> <span class="variable">in</span> <span class="variable">reconstructed</span> <span class="variable">pedigree</span> <span class="operator">(</span><span class="keyword">default</span> <span class="operator">=</span> <span class="keyword">no</span> <span class="variable">limit</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">max_gen_gap</span>        <span class="variable">Max</span> <span class="variable">number</span> <span class="variable">of</span> <span class="variable">generations</span> <span class="variable">between</span> <span class="variable">two</span> <span class="variable">people</span> <span class="variable">that</span> <span class="variable">have</span> <span class="variable">a</span> <span class="variable">child</span> <span class="operator">(</span><span class="keyword">default</span> <span class="operator">=</span> <span class="number">0</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">age_file</span>           <span class="variable">Specify</span> <span class="variable">path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">file</span> <span class="variable">containing</span> <span class="variable">the</span> <span class="variable">age</span> <span class="variable">of</span> <span class="keyword">each</span> <span class="variable">sample</span>
+   <span class="operator">--</span><span class="variable">ages</span>               <span class="variable">Like</span> <span class="operator">--</span><span class="variable">age_file</span> <span class="variable">but</span> <span class="variable">requires</span> <span class="variable">FILE</span><span class="operator">=</span><span class="operator">[</span><span class="variable">file</span><span class="operator">]</span><span class="operator">,</span> <span class="variable">optional</span> <span class="variable">specification</span> <span class="variable">of</span> <span class="variable">file</span> <span class="variable">columns</span>
+   <span class="operator">--</span><span class="variable">sex_file</span>           <span class="variable">Specify</span> <span class="variable">path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">file</span> <span class="variable">containing</span> <span class="variable">the</span> <span class="variable">sex</span> <span class="variable">of</span> <span class="keyword">each</span> <span class="variable">sample</span>
+   <span class="operator">--</span><span class="variable">sexes</span>              <span class="variable">Like</span> <span class="operator">--</span><span class="variable">sex_file</span> <span class="variable">but</span> <span class="variable">requires</span> <span class="variable">FILE</span><span class="operator">=</span><span class="operator">[</span><span class="variable">file</span><span class="operator">]</span><span class="operator">,</span> <span class="variable">optional</span> <span class="variable">specification</span> <span class="variable">of</span> <span class="variable">file</span> <span class="variable">columns</span>
+   <span class="operator">--</span><span class="variable">mito_matches</span>       <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">mito</span> <span class="variable">matching</span> <span class="variable">status</span> <span class="keyword">for</span> <span class="keyword">each</span> <span class="variable">pair</span> <span class="variable">of</span> <span class="variable">samples</span> <span class="operator">(</span><span class="variable">requires</span> <span class="variable">FILE</span><span class="operator">=</span><span class="operator">[</span><span class="variable">file</span><span class="operator">]</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">y_matches</span>          <span class="variable">Path</span> <span class="variable">to</span> <span class="regex">y matching status for each pair of samples (requires FILE=[file])
+   --MT_error_rate      Proportion of the MT sequence that must</span> <span class="keyword">not</span> <span class="variable">match</span> <span class="variable">to</span> <span class="variable">be</span> <span class="variable">called</span> <span class="variable">a</span> <span class="variable">non</span><span class="operator">-</span><span class="variable">match</span>
+   <span class="operator">--</span><span class="variable">Y_error_rate</span>       <span class="variable">Proportion</span> <span class="variable">of</span> <span class="variable">the</span> <span class="variable">Y</span> <span class="variable">sequence</span> <span class="variable">that</span> <span class="variable">must</span> <span class="keyword">not</span> <span class="variable">match</span> <span class="variable">to</span> <span class="variable">be</span> <span class="variable">called</span> <span class="variable">a</span> <span class="variable">non</span><span class="operator">-</span><span class="variable">match</span>
+   <span class="operator">--</span><span class="variable">affection_file</span>     <span class="variable">Specify</span> <span class="variable">path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">file</span> <span class="variable">containing</span> <span class="variable">the</span> <span class="variable">affection</span> <span class="variable">status</span> <span class="variable">of</span> <span class="keyword">each</span> <span class="variable">sample</span>
+   <span class="operator">--</span><span class="variable">affections</span>         <span class="variable">Like</span> <span class="operator">--</span><span class="variable">affection_file</span><span class="operator">;</span> <span class="variable">need</span> <span class="variable">FILE</span><span class="operator">=</span><span class="operator">[</span><span class="variable">file</span><span class="operator">]</span><span class="operator">,</span> <span class="variable">optional</span> <span class="variable">specification</span> <span class="variable">of</span> <span class="variable">file</span> <span class="variable">columns</span>
+   <span class="operator">--</span><span class="variable">int_likelihood_cutoff</span>      <span class="variable">Initial</span> <span class="variable">minimum</span> <span class="variable">likelihood</span> <span class="keyword">for</span> <span class="variable">a</span> <span class="variable">relationship</span> <span class="variable">to</span> <span class="variable">reconstruction</span> <span class="operator">(</span><span class="keyword">default</span> <span class="operator">=</span> <span class="number">0</span><span class="operator">.</span><span class="number">1</span><span class="operator">)</span>
+ 
+ <span class="variable">PRIMUS</span><span class="operator">+</span><span class="variable">ERSA</span> <span class="variable">options</span><span class="operator">:</span>
+   <span class="operator">--</span><span class="variable">ersa_model_output</span>  <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">model_output_file</span> <span class="variable">generated</span> <span class="variable">by</span> <span class="variable">ERSA</span>
+   <span class="operator">--</span><span class="variable">ersa_results</span>       <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">standard</span> <span class="variable">ERSA</span> <span class="variable">results</span> <span class="variable">file</span>
+   <span class="operator">--</span><span class="variable">project_summary</span>    <span class="variable">Path</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">PRIMUS</span> <span class="variable">generated</span> <span class="variable">project</span> <span class="variable">level</span> <span class="variable">summary</span> <span class="variable">file</span> <span class="operator">(</span><span class="variable">usualy</span> <span class="variable">in</span> <span class="variable">*_PRIMUS</span><span class="operator">/</span> <span class="variable">dir</span><span class="operator">)</span>
+   <span class="operator">--</span><span class="variable">degree_rel_cutoff</span>  <span class="variable">Specify</span> <span class="variable">the</span> <span class="variable">minimum</span> <span class="variable">degree</span> <span class="variable">of</span> <span class="variable">relatedness</span> <span class="variable">used</span> <span class="variable">to</span> <span class="variable">generated</span> <span class="variable">pedigrees</span> <span class="operator">(</span><span class="keyword">default</span> <span class="operator">=</span> <span class="number">3</span><span class="operator">)</span>
+</code></pre>
+
+<h1 id="DOCUMENTATION">DOCUMENTATION</h1>
+
+<h3 id="For-usage-and-documentation">For usage and documentation:</h3>
+
+<dl>
+
+<dt id="h---help"><b>-h, --help</b></dt>
+<dd>
+
+<p>Print a brief help message and exits.</p>
+
+</dd>
+<dt id="man"><b>--man</b></dt>
+<dd>
+
+<p>Prints the manual page and exits.</p>
+
+</dd>
+</dl>
+
+<h3 id="Required-one-of-the-following">Required (one of the following):</h3>
+
+<dl>
+
+<dt id="p-file---plink_ibd-file"><b>-p</b> <i>file</i>, <b>--plink_ibd</b> <i>file</i></dt>
+<dd>
+
+<p>Specify path to a .genome IBD estimates file that was generated PLINK using the --genome command. The .genome files are white space seperate files with a header. The columns are in the following order: FID1(1) IID1(2) FID2(3) IID2(4) RT(5) EZ(6) IDB0(7) IBD1(8) IBD2(9) PI_HAT(10) and these are the default column settings for this option.</p>
+
+</dd>
+<dt id="i-FILE-FILE-options---input-FILE-FILE-options"><b>-i</b> FILE=<i>FILE</i> [<i>options</i>], <b>--input</b> FILE=<i>FILE</i> [<i>options</i>]</dt>
+<dd>
+
+<p>Specify path to a a file containing white-space separated file in which each row shows a pairwise comparison of two samples (e.g. genome-wide IBD estimates). This file must contain a family ID (FID) and an individual ID (IID) for each sample and the combination of the FID and IID must be unique. The order of columns doesn&#39;t matter but if they differ from the default settings (see option --prePRIMUS for defaults and expected column names) then the user must specify the column number for each necessary column. For identification of a maximum unrelated set, the input file must have FID1, IID1, FID2, IID2, and PI_HAT (or another numerical way of representing a relationship). For pedigree reconstruction, the input file must have columns 1-4 and 7-10 described in option --plink_ibd, except that the PI_HAT/RELATEDNESS column can be a different measure of relatedness. The PI_HAT column is used to identify the family networks. The input file MUST have a header line, but the column headings do not need to match those described in this document. However, you must specify each column number that differs from the defaults, and this is what the &lt;options&gt; section allows you to do. For example, your input file is named <i>input.txt</i> and has the following columns: FID1(1) IID1(2) FID2(3) IID2(4) IDB0(5) IBD1(6) IBD2(7) PI_HAT(8), you will need to use the following command:</p>
+
+<p>run_PRIMUS.pl -i FILE=<i>path/input.txt</i> IBD0=5 IBD1=6 IBD2=7 PI_HAT=8</p>
+
+<p>Notice that I didn&#39;t have to specify the columns for the FIDs or the IIDs because they still match the defaults. I did have to specify the columns numbers for the other 4 columns.</p>
+
+<p><b>Note: All column numbers are done using one based numbering, i.e. the first column in a file is column 1, ect.</b></p>
+
+</dd>
+</dl>
+
+<h3 id="or-both-of-the-following">(or both of the following):</h3>
+
+<dl>
+
+<dt id="file-file"><b>--file</b> <i>file</i></dt>
+<dd>
+
+<p>Path to a PLINK formatted ped/map or bed/bim/fam files, but without the file extensions. This option behaves just like PLINK&#39;s --file and --bfile options, but here it must be used with the --genome option. For example, if your ped and map files are <i>/usr/data/foo.ped</i> and <i>/usr/data/foo.map</i>, then you could use the following command:</p>
+
+<p>run_PRIMUS.pl --file <i>/usr/data/foo</i> --genome</p>
+
+<p>Check the PLINK documentation (http://pngu.mgh.harvard.edu/~purcell/plink/) for details on the formatting for this file.</p>
+
+</dd>
+<dt id="genome"><b>--genome</b></dt>
+<dd>
+
+<p>This option tells PRIMUS to read in the specified ped/map or bed/bim/fam files and calculate IBD estimates using the prePRIMUS IBD pipeline.</p>
+
+</dd>
+</dl>
+
+<h3 id="General-Options">General Options:</h3>
+
+<dl>
+
+<dt id="t-NUM---rel_threshold-NUM"><b>-t</b> <i>NUM</i>, <b>--rel_threshold</b> <i>NUM</i></dt>
+<dd>
+
+<p>Set the minimum level of relatedness for two people to be considered related (Default = 0.1). PRIMUS considers any pair of individuals to be related if the value in the PI_HAT/RELATEDNESS column of the IBD estimates file is above this threshold. For example, if your measure of relatedness is PI_HAT in PLINK&#39;s .genome file and you want to identify all relationships up to third degree relatives, use:</p>
+
+<p><b>--rel_threshold</b> 0.1</p>
+
+<p>Recommended PI_HAT thresholds for first and second degree relatives are 0.375 and 0.1875, respectively. You will need to determine the threshold cutoffs for different measures of relatedness (e.g. kinship coefficients are half of the PI_HAT values).</p>
+
+</dd>
+<dt id="d-NUM---degree_rel_cutoff-NUM"><b>-d</b> <i>NUM</i>, <b>--degree_rel_cutoff</b> <i>NUM</i></dt>
+<dd>
+
+<p>Set the maximum degree of relatedness for two people to be considered as related (Default = 3; i.e., 3rd degree relatives). PRIMUS considers any pair of individuals to be related their are classified as 3rd degree relatives or closer by the value in the PI_HAT column of the IBD estimates file. This only works properly if PI_HAT genome-wide IBD estimates are provided. Default is 3rd degree, which results in a --rel_threshold will be set to 0.09375. If 2nd degree is pecified, then the --rel_threshold will be set to 0.1875. If 1st degree is specified, then the --rel_threshold will be set to 0.375. For example, if your measure of relatedness is PI_HAT in PLINK&#39;s .genome file and you want to identify all relationships up to 2nd degree relatives, use:</p>
+
+<p><b>--degree_rel_cutoff</b> 2</p>
+
+<p>Recommended PI_HAT thresholds for first and second degree relatives are 0.375 and 0.1875, respectively. PRIMUS will not allow for any relationships other than 1, 2, and 3. If you specify --degree_rel_cutoff and --rel_threshold, then PRIMUS will use the the threshold cutoffs described above based on the --degree_rel_cutoff specified and will ignore the input provided with --rel_threshold.</p>
+
+</dd>
+<dt id="o-DIR---output_dir-DIR"><b>-o</b> <i>DIR</i>, <b>--output_dir</b> <i>DIR</i></dt>
+<dd>
+
+<p>Specify path to the output directory for the dataset results. Default is [<i>input_file</i>]_PRIMUS. For example, if your input file is <i>path/input.txt</i>, the default results directory would be</p>
+
+<p>path/input.txt_PRIMUS/</p>
+
+<p><b>NOTE: Both results from IMUS and Pedigree Reconstruction will be written to this directory.</b> See section on OUTPUT FILES for a description of the directory structures and files.</p>
+
+</dd>
+<dt id="verbose-0-1-2"><b>--verbose [0|1|2]</b></dt>
+<dd>
+
+<p>Set verbosity level (Default = 1). 0: nearly no ouput except for errors; 1: shows input files, settings, and progress of run; 2: Same as &quot;1&quot; plus details about pedigree reconstruction</p>
+
+</dd>
+<dt id="degree_rel_cutoff-1-2-3"><b>--degree_rel_cutoff [1|2|3]</b></dt>
+<dd>
+
+<p>Rather than specifying the the PI_HAT cutoff you want, you can specify the maximum degree of relatedness you wish to use to connect a family network. PRIMUS will then concert this into the appropriate PI_HAT cutoff values: 1st degree = 0.375; 2nd degree = 0.1875; and 3rd degree = 0.9375. This option is also used for PRIMUS+ERSA (see below for those details).</p>
+
+</dd>
+</dl>
+
+<h3 id=""></h3>
+
+<h3 id="PLINK-IBD-estimation-not-included-in-lite-version">PLINK IBD estimation (not included in lite version)</h3>
+
+<dl>
+
+<dt id="file-file_stem"><b>--file</b> <i>file_stem</i></dt>
+<dd>
+
+<p>Path to a PLINK formatted ped/map or bed/bim/fam files, but without the file extensions. This option behaves just like PLINK&#39;s --file and --bfile options, but here it must be used with the --genome option. For example, if your ped and map files are <i>/usr/data/foo.ped</i> and <i>/usr/data/foo.map</i>, then you could use the following command:</p>
+
+<p>run_PRIMUS.pl --file <i>/usr/data/foo</i> --genome</p>
+
+<p>Check the PLINK documentation (http://pngu.mgh.harvard.edu/~purcell/plink/) for details on the formatting for this file.</p>
+
+</dd>
+<dt id="genome1"><b>--genome</b></dt>
+<dd>
+
+<p>This option tells PRIMUS to read in the specified ped/map or bed/bim/fam files (given with --file) and calculate IBD estimates using the prePRIMUS IBD pipeline.</p>
+
+</dd>
+<dt id="plink_ex"><b>--plink_ex</b></dt>
+<dd>
+
+<p>Path to the plink executable file (use if plink is not in your PATH environment variable)</p>
+
+</dd>
+<dt id="smartpca_ex"><b>--smartpca_ex</b></dt>
+<dd>
+
+<p>Path to the EIGENSTRAT&#39;s smartpca executable file (use if the smartpca executable is not in your PATH environment variable). Note: EIGENSTRAT is currently (July 2014) only available for linux machines.</p>
+
+</dd>
+<dt id="ref_pops"><b>--ref_pops</b></dt>
+<dd>
+
+<p>Comma separated list of HapMap3 populations (ASW,CEU,CHB,CHD,GIH,JPT,LWK,MEX,MKK,TSI,YRI) used for reference allele freqs.</p>
+
+</dd>
+<dt id="no_automatic_IBD"><b>--no_automatic_IBD</b></dt>
+<dd>
+
+<p>PRIMUS automatically selects the HapMap3 population(s) for reference allele freqs. We recommend inspecting the PCA plot to confirm the selection of the reference populations. Add this option to the command line if you would like to have PRIMUS stop after generating the PCA plots so you can manually inspect the PCA plot and then rerun PRIMUS specifying the reference populations with the --ref_pops option.</p>
+
+</dd>
+<dt id="remove_AIMs"><b>--remove_AIMs</b></dt>
+<dd>
+
+<p>Force the removal of SNPs associated with principle component vectors 1 and 2 (usually associated with ancestry and are ancestry informative markers (AIMs)). The default is to NOT remove AIMs unless the HapMap3 reference poplations selected indicate that your data is admixed. By default AIMs are not removed with the options --internal_ref or --alt_ref_stem. Warning: if ancestry is not the most informative principle component vectors, then you will likely unnecessarily remove informative SNPs.</p>
+
+</dd>
+<dt id="keep_AIMs"><b>--keep_AIMs</b></dt>
+<dd>
+
+<p>Do not remove ancestry informative markers. The default is to remove AIMs if the HapMap3 reference poplations selected indicate that your data is admixed. Use this option to prevent AIM removal in these cases.</p>
+
+</dd>
+<dt id="internal_ref"><b>--internal_ref</b></dt>
+<dd>
+
+<p>This option tells PRIMUS to use only the dataset provided in --file to get reference allele frequencies rather than trying to find a good reference HapMap3 population. Warning: only use this option if your dataset has a lot of unrelated samples with similar genetic backgrounds.</p>
+
+</dd>
+<dt id="alt_ref_stem-file_stem"><b>--alt_ref_stem</b> <i>file_stem</i></dt>
+<dd>
+
+<p>Path to PLINK formatted ped/map or bed/bim/fam files, but without the file extensions. These files will be merged with an unrelated version of the data provided in --file to obtain reference allele frequencies that will be used to calculate IBD estimates and other QC measures.</p>
+
+</dd>
+<dt id="no_PCA_plot"><b>--no_PCA_plot</b></dt>
+<dd>
+
+<p>PRIMUS will automatically run smartpca (a program from EIGENSTRAT) and make a PCA plot of your data with any reference data provided or with the entire HapMap3 dataset. This is a very useful tool for doing QC on your data. However, smartpca can take a while to run on large datasets. You can use this option to forgo running smartpca and getting PCA plots in order to get a faster runtime. Note: EIGENSTRAT is currently (July 2014) only available for linux machines, so this option would be necessary if you are running prePRIMUS in Windows or on a Mac</p>
+
+</dd>
+<dt id="alt_ref_stem-file_stem1"><b>--alt_ref_stem</b> <i>file_stem</i></dt>
+<dd>
+
+<p>Path to a PLINK formatted ped/map or bed/bim/fam files, but without the file extensions. These files will be be merged with an unrelated version of the data provided in --file to obtain reference allele frequencies that will be used to calculate IBD estimates and other QC measures. Caution: prePRIMUS does not run QC on the the alternate reference data. Make sure the reference data is cleaned and only has unrelated samples. YOu can do this using the prePRIMUS.pm subroutines or with other methods.</p>
+
+</dd>
+<dt id="keep_inter_files"><b>--keep_inter_files</b></dt>
+<dd>
+
+<p>By default, prePRIMUS will clean up the intermediate files used to generate the IBD estimates and other provided results. If you wish to keep these files, use this option.</p>
+
+</dd>
+</dl>
+
+<h3 id="Identification-of-maximum-unrelated-set-options">Identification of maximum unrelated set options:</h3>
+
+<dl>
+
+<dt id="no_IMUS"><b>--no_IMUS</b></dt>
+<dd>
+
+<p>Add this option to stop PRIMUS from identifying a maximum unrelated set. In the case of large, sparse networks, identifying a maximum unrelated set can take a while. If you are only interested in reconstructing pedigrees, you may prefer to use this option.</p>
+
+</dd>
+<dt id="missing_val-NUM"><b>--missing_val</b> <i>NUM</i></dt>
+<dd>
+
+<p>Set value that denotes missing data in your trait files (Default = 0).</p>
+
+</dd>
+<dt id="s---size"><b>-s</b>, <b>--size</b></dt>
+<dd>
+
+<p>Specify to weight on size. The order that traits are enter on the command line determines the order that they are applied to weight the unrelated sets. Be default, size is always the first weighting criteria unless a binary trait is specified first on the command line.</p>
+
+</dd>
+<dt id="high_btrait-FILE"><b>--high_btrait</b> <i>FILE</i></dt>
+<dd>
+
+<p>Specify path to a file containing white space separated columns for FID, IID, and binary trait for which you wish to weight for the higher of the two values. For automated processing, this file should only have three columns in this order: FID, IID, TRAIT. If there are more columns then the program will ask you to specify which column in the file corresponds to FID, IID, and TRAIT.</p>
+
+<p>In the case that you wish to weight on more than one trait at a time, the order that traits are entered on the command line determines the order that they are applied to weight the unrelated sets. If a binary trait is specified before <b>--size</b> then PRIMUS identifies an unrelated set that contains the largest number of individuals with the desired binary value, which will not necessarily be a maximum unrelated set.</p>
+
+</dd>
+<dt id="low_btrait"><b>--low_btrait</b></dt>
+<dd>
+
+<p>Same as <b>--high_btrait</b>, but selects for the lower of the two values.</p>
+
+</dd>
+<dt id="high_qtrait"><b>--high_qtrait</b></dt>
+<dd>
+
+<p>Similar to <b>--high_btrait</b> but the trait value can be continuous quantitative trait. PRIMUS cannot select first for qtrait. If specified first on the command line, PRIMUS will first select on size and then the desired qtrait. As a result, PRIMUS will identify the maximum unrelated set that also has the highest average value for the specified qtrait.</p>
+
+</dd>
+<dt id="low_qtrait"><b>--low_qtrait</b></dt>
+<dd>
+
+<p>Same as <b>--high_qtrait</b>, but selects for the lowest average value for the qtrait.</p>
+
+</dd>
+<dt id="mean_qtrait"><b>--mean_qtrait</b></dt>
+<dd>
+
+<p>Same as <b>--high_qtrait</b>, but selects for the maximum unrelated set that has an average value for the qtrait closest to the mean qtrait value of the entire dataset.</p>
+
+</dd>
+<dt id="tails_qtrait"><b>--tails_qtrait</b></dt>
+<dd>
+
+<p>Same as <b>--high_qtrait</b>, but selects for the maximum unrelated set that has individual qtrait values furthest from the mean qtrait value of the entire dataset.</p>
+
+</dd>
+</dl>
+
+<h3 id="Pedigree-reconstruction-options">Pedigree reconstruction options:</h3>
+
+<dl>
+
+<dt id="no_PR"><b>--no_PR</b></dt>
+<dd>
+
+<p>Adding this option will turn off pedigree reconstruction. For some family networks, it takes a while to reconstruct all possible pedigrees. If all you desire is to identify a maximum unrelated set, then you may wish to use this option.</p>
+
+</dd>
+<dt id="max_gens-NUM"><b>--max_gens</b> <i>NUM</i></dt>
+<dd>
+
+<p>Set max number of sampled generations allowed in reconstructed pedigrees (default = no limit). The number of sampled generations in a pedigree is the number of generations from which the sample data had to be collected. For example, if the pedigree consists of two parents and two children, then there are two generations. Alternatively, if the pedigree is just the two siblings, then there is only one generation because the data had to be collected from a single generation. Finally, if you have a great-grandparent and a great-grandchild but are missing the samples in-between, the pedigree still has 4 generations because sample data must have been collected from individuals spanning 4 generations.</p>
+
+<p>In the case that you know your data was collected from a single time point, you can be confident that you will not have sampled individuals from more than 3-4 generations. So you may want to use the option <b>--max_gens</b> 4 or <b>--max_gens</b> 5.</p>
+
+<p>This option can be beneficial: 1. it reduces the number of possible pedigrees reconstructed. 2. it speeds up the program runtime because you won&#39;t be exploring as large of a pedigree search space.</p>
+
+</dd>
+<dt id="max_gen_gap-NUM"><b>--max_gen_gap</b> <i>NUM</i></dt>
+<dd>
+
+<p>Set max number of generations between two people that have a child (default = 0). This option only matters if the pedigree has cycles due to inbreeding or other complex relationships. For example, a widowed mother had a child with a man named Tom, who died tragically. She then marries Tom&#39;s cousin, Jerry and has another child. Although the two children are not inbred, they do have a complex relationship: half-sibling + second-cousin. By having children with two cousins, the mother created a cycle in the pedigree that is non-trivial to resolve. PRIMUS can resolve these pedigrees but to test and reconstruct all possible cycles is computationally intensive. To limit the number of tests for cycles, PRIMUS uses the <b>--max_gen_gap</b> option. In the example provided above, the two cousins are in the same generation, so the generation gap between them is 0. However, let&#39;s say that the mother had children with an uncle/nephew pair, then the generation gap between those two would be 1. To reconstruct this second example, <b>--max_gen_gap</b> would need to be set to 1.</p>
+
+<p>For most pedigrees the option default of zero will be perfect. However, it may need to be increased for pedigrees that are expected to have cycles due to inbreeding or other complex relationships where individuals from different generations mate.</p>
+
+</dd>
+<dt id="int_likelihood_cutoff-NUM"><b>--int_likelihood_cutoff</b> <i>NUM</i></dt>
+<dd>
+
+<p>Set the initial minimum likelihood to consider a relationship during reconstruction, must be between 0.001 and 1 (default = 0.1). PRIMUS uses a Kernel Density Estimation function to calculate the likelihood that a given set of IBD estimates corresponds to each relationship category. PRIMUS uses the minimum likelihood cutoff to determine which relationship categories it considers during reconstruction. This is the &quot;initial&quot; likelihood cutoff because it is used for the first attempt at reconstructing the pedigree. If no pedigree is reconstructed, PRIMUS will automatically drop the minimum likelihood cutoff by an order of magnitude and attempt to reconstruct again. Once the minimum likelihood cutoff drops below 0.001, PRIMUS will stop attempting to reconstruct the pedigree.</p>
+
+</dd>
+<dt id="age_file-FILE"><b>--age_file</b> <i>FILE</i></dt>
+<dd>
+
+<p>Specify the path to the file containing the age of each sample. This information is used to flag possible pedigrees that are inconsistent with the input ages. It is also included after the individuals name in the pedigree image. The file must also be separated into white space delimited columns. It must have at least three columns and the first three columns must be in this order: FID, IID, and AGE. The FIDs and IIDs must be consistent in all input files. If your columns are not in this order, then use the <b>--ages</b> option. You may have a header in this file, but it is not necessary. Missing value for age needs to be a negative value or &quot;NA&quot;. The program can will assume anyone not in the age file as missing.</p>
+
+</dd>
+<dt id="ages-FILE-FILE-options"><b>--ages</b> FILE=<i>FILE</i> [<i>options</i>]</dt>
+<dd>
+
+<p>Specify the path and columns to the file containing the age of each sample. This information is used to flag possible pedigrees that are inconsistent with the input ages. The age is also included after the individual&#39;s name in the pedigree image. Missing value for age needs to be a negative value or &quot;NA&quot;. The program can will assume anyone not in the age file as missing. The file must contain a column for FID, IID, and AGE, but the order does not matter. If the column number differs from the default (FID(1), IID(2), AGE(3)) then you must specify the column number. For example, let&#39;s say your file <i>path_to_data/age.txt</i> has 4 columns: AGE(1), IID(2) and FID(3), then the <b>--ages</b> option would need to be:</p>
+
+<p><b>--ages</b> FILE=<i>path_to_file/age.txt</i> FID=3 AGE=1</p>
+
+<p>Notice I did not have to specify the column number for IID because its column still matches the default. <b>Note: The follow commands are equivalent:</b></p>
+
+<p><b>--age_file</b> <i>path/file.txt</i></p>
+
+<p><b>--ages</b> FILE=<i>path/file.txt</i> FID=1 IID=2 AGE=3</p>
+
+</dd>
+<dt id="sex_file-FILE"><b>--sex_file</b> <i>FILE</i></dt>
+<dd>
+
+<p>Specify path to the file containing the sex of each sample. This information is used to test that a pedigree is compatible with know sex information. It is also used to correctly draw the individual&#39;s symbol on the pedigree image. The file must also be separated into white space delimited columns. It must have at least three columns and the first three columns must be in this order: FID, IID, and SEX. The FIDs and IIDs must be consistent in all files input files. If you columns are not in this order, then use the <b>--sexes</b> option. You may have a header in this file, but it is not necessary. The default value for male is 1 and female is 2. Use 0 for unknown sex.</p>
+
+</dd>
+<dt id="sexes-FILE-FILE-options"><b>--sexes</b> FILE=<i>FILE</i> [<i>options</i>]</dt>
+<dd>
+
+<p>Specify the path and columns to the file containing the sex of each sample. This information is used to test that a pedigree is compatible with genetically derived sex information. It is also used to correctly draw the correct symbol on the pedigree image. The file must contain a column for FID, IID, and SEX, but the order does not matter. If the column number differs from the default (FID(1), IID(2), SEX(3)) then you must specify the column number. For example, let&#39;s say your file <i>path_to_data/sex.txt</i> has 4 columns: FID(1), SEX(2) and IID(3), then your the <b>--sexes</b> option would need to be:</p>
+
+<p><b>--ages</b> FILE=<i>path_to_file/sex.txt</i> IID=3 AGE=2</p>
+
+<p>Notice I did not have to specify the column number for FID because its column still matches the default. <b>Note: The follow commands are equivalent:</b></p>
+
+<p><b>--sex_file</b> <i>path/file.txt</i></p>
+
+<p><b>--sexes</b> FILE=<i>path/file.txt</i> FID=1 IID=2 SEX=3&gt;</p>
+
+<p>The default value for male is &quot;1&quot; and female is &quot;2&quot;. Use 0 for unknown sex. To specify a different value for male and female, use the MALE=&lt;val&gt; and FEMALE=&lt;val&gt;. For example, if file.txt has the sexes of the individuals in the 4th column but they are labeled &quot;male&quot; and &quot;female&quot; you should use the command</p>
+
+<p><b>--sexes</b> FILE=<i>path/file.txt</i> SEX=4 MALE=male FEMALE=female</p>
+
+</dd>
+<dt id="affection_file-FILE"><b>--affection_file</b> <i>FILE</i></dt>
+<dd>
+
+<p>Specify the path to the file containing the affection status of each sample. This information is only used to label affected individuals on the pedigree images. The default value for affection status is affected=2. The file must also be separated into white space delimited columns. It must have at least three columns and the first three columns must be in this order: FID, IID, and AFFECTION_STATUS. The FIDs and IIDs must be consistent in all input files. If your columns are not in this order, then use the <b>--affections</b> option. You may have a header in this file, but it is not necessary.</p>
+
+</dd>
+<dt id="affections-FILE-FILE-options"><b>--affections</b> FILE=<i>FILE</i> [<i>options</i>]</dt>
+<dd>
+
+<p>Specify the path and columns to the file containing the affection status of each sample. This information is only used to label affected individuals on the pedigree images. The file must contain a column for FID, IID, and AFFECTION_STATUS, but the order does not matter. If the column number differs from the default order (FID(1), IID(2), AFFECTION_STATUS(3)) then you must specify the column number. For example, let&#39;s say your file <i>path_to_data/a_status.txt</i> has 4 columns: FID(1), IID(2), SEX(3), AFFECTION_STATUS(4), and the values are 0=unaffected and 1=affected. Then your <b>--affections</b> option would need to be:</p>
+
+<p><b>--affections</b> FILE=<i>path_to_file/a_status.txt</i> AFFECTION=4 AFFECTION_VALUE=1;</p>
+
+<p>Notice I did not have to specify the column number for FID or IID because their columns still match the defaults. Note: The following commands are equivalent:</p>
+
+<p><b>--affection_file</b> <i>path/file.txt</i></p>
+
+<p><b>--affections</b> FILE=<i>path/file.txt</i> FID=1 IID=2 AFFECTION=3 AFFECTION_VALUE=2</p>
+
+</dd>
+<dt id="mito_matches---mito-FILE-FILE-options"><b>--mito_matches | --mito</b> FILE=<i>FILE</i> [<i>options</i>]</dt>
+<dd>
+
+<p>Specify the path and columns to the file containing the mitochondrial matching status for each pair of samples. This information is used to eliminate the possible pedigrees that are not consistant with the mitochondrial data. By default, PRIMUS only uses non-matches because matches can often occur by chance in a population. The file must contain a column for FID1, IID1, FID2, IID2, and MATCHING_STATUS, but the order does not matter. If the column number differs from the default order (FID1(1), IID1(2), FID2(3), IID2(4) MATCHING_STATUS(5)) then you must specify the column number. For example, let&#39;s say your file <i>path_to_data/matching_status.txt</i> has 7 columns: FID1(1), IID1(2), FID1(3), IID1(4), SEX(5), AFFECTION_STATUS(6), MITO_MATCHING_STATUS(7), and the values are 0=non-match and 1=match. Then your <b>--mito_matches</b> option would need to be:</p>
+
+<p><b>--mito_matches</b> FILE=<i>path_to_file/matching_status.txt</i> MATCH=7 MATCH_VALUE=1;</p>
+
+<p>Notice I did not have to specify the column number for FID1, IID1, FID2 and IID2 because their columns still match the defaults. An unknown match can be specified with a -1.</p>
+
+</dd>
+<dt id="MT_error_rate-NUM"><b>--MT_error_rate</b> <i>NUM</i></dt>
+<dd>
+
+<p>Specify a number netween 0 and 1 for as the proportion of the MT sequence that needs to be different between two individuals in order to be called a non-match. Default is 0.01; However, for more error prone data, this will be too low. If pedigree reconstructions are not outputing a possible pedigree due to FAILED MITO CHECK, then you could be rejecting the true pedigree because of poor calling of MT SNPs. It is recommend to provide a higher cutoff if you are having this problem, such as 0.02 or 0.05.</p>
+
+</dd>
+<dt id="y_matches---y-FILE-FILE-options"><b>--y_matches | --y</b> FILE=<i>FILE</i> [<i>options</i>]</dt>
+<dd>
+
+<p>Specify the path and columns to the file containing the Y chromosome matching status for each pair of samples. This information is used to eliminate the possible pedigrees that are not consistant with the mitochondrial data. By default, PRIMUS only uses non-matches because matches can often occur by chance in a population. The file must contain a column for FID1, IID1, FID2, IID2, and MATCHING_STATUS, but the order does not matter. If the column number differs from the default order (FID1(1), IID1(2), FID2(3), IID2(4) MATCHING_STATUS(5)) then you must specify the column number. For example, let&#39;s say your file <i>path_to_data/matching_status.txt</i> has 7 columns: FID1(1), IID1(2), FID1(3), IID1(4), SEX(5), AFFECTION_STATUS(6), Y_MATCHING_STATUS(7), and the values are 0=non-match and 1=match. Then your <b>--y_matches</b> option would need to be:</p>
+
+<p><b>--y_matches</b> FILE=<i>path_to_file/matching_status.txt</i> MATCH=7 MATCH_VALUE=1;</p>
+
+<p>Notice I did not have to specify the column number for FID1, IID1, FID2 and IID2 because their columns still match the defaults. An unknown match can be specified with a -1.</p>
+
+</dd>
+<dt id="Y_error_rate-NUM"><b>--Y_error_rate</b> <i>NUM</i></dt>
+<dd>
+
+<p>Specify a number netween 0 and 1 for as the proportion of the Y sequence that needs to be different between two individuals in order to be called a non-match. Default is 0.01; However, for more error prone data, this will be too low. If pedigree reconstructions are not outputing a possible pedigree due to FAILED Y CHECK, then you could be rejecting the true pedigree because of poor calling of Y SNPs. It is recommend to provide a higher cutoff if you are having this problem, such as 0.02 or 0.05.</p>
+
+</dd>
+</dl>
+
+<h3 id="PRIMUS-ERSA-options">PRIMUS+ERSA options:</h3>
+
+<dl>
+
+<dt id="OVERVIEW"><b>OVERVIEW</b></dt>
+<dd>
+
+<p>PRIMUS+ERSA is an algorithm uses the pairwise relationship estimate likelihoods and results generated by ERSA to connect the pedigrees reconstructed by PRIMUS. This tool will generate two output files. One will contain the network numbers, pedigree numbers, and names of founder in each pedigree that is most likely to be connected to the other pedigree at the degree of relationship specified in the final column. There will be one line per pair of networks. Individuals who are unrelated at the relatedness threshold specified are treated as their own network. The other results file provides the same information but for every related pair of genotyped individuals in all the networks.</p>
+
+</dd>
+<dt id="ersa_model_output-path-file"><b>--ersa_model_output</b> <i>path/file</i></dt>
+<dd>
+
+<p>ERSA will generate this file when the <b>--model_output_file</b> <i>path/file</i> option specified on the commandline when running ERSA. For each pair of individuals in the dataset, it will contain the likelihood that they are related as 1st through 40th degree relatives sharing 0, 1, or two parents in common at each degree. PRIMUS uses these likelihhods and the likelihood that they are unrelated (obtained from the file specified with the <b>--ersa_results</b> option) to find the most likely way each family network is connected.</p>
+
+</dd>
+<dt id="ersa_results-path-file"><b>--ersa_results</b> <i>path/file</i></dt>
+<dd>
+
+<p>ERSA&#39;s main output file (specified with the --output_file option) needs to be provided. PRIMUS + ERSA uses the likelihood that a pair of individuals are unrelated in its algorithm. Provide the path to the file here.</p>
+
+</dd>
+<dt id="project_summary-path-Summary_-.genome.txt"><b>--project_summary</b> <i>path/Summary_*.genome.txt</i></dt>
+<dd>
+
+<p>The project level summary file is in the main output directory which we call the Project level directory (default is *_PRIMUS). In the main ouput directory, there are two summary files. One is a summary containing the pairwise relationship table (*_pairwuse_table.txt), and this is NOT the file you want to provide with this option. You want to provide the other summary file.</p>
+
+<p>Note: you can rerun PRIMUS+ERSA in the same run as the pedigree reconstructions. In which case, you do not need to include this option.</p>
+
+</dd>
+<dt id="degree_rel_cutoff-1-2-31"><b>--degree_rel_cutoff [1|2|3]</b></dt>
+<dd>
+
+<p>If you do not reconsruct the pedigrees in the same run as PRIMUS+ERSA, then you need to specify what degree of relatedness you used as your cutoff during reconstruction. Currently, there is no way for PRIMUS+ERSA to know if you used something other than the default relationship cutoff (default is 3), so you must specify if you used a different degree.</p>
+
+<p>Alternative, if you reconstructed using the --threshold or -t option, then you can use the same option and value you used during reconstructionto correctly run PRIMUS + ERSA.</p>
+
+</dd>
+</dl>
+
+<h1 id="DEFINITIONS">DEFINITIONS</h1>
+
+<dl>
+
+<dt id="DIR"><i>DIR</i></dt>
+<dd>
+
+<p>A full path or a relative path to a directory.</p>
+
+</dd>
+<dt id="FILE"><i>FILE</i></dt>
+<dd>
+
+<p>A full path or a relative path to an input files.</p>
+
+</dd>
+<dt id="file_stem"><i>file_stem</i></dt>
+<dd>
+
+<p>A full path or a relative path to an input file, but without including the file extensions (e.g. the file stem for &quot;foo_bar.ped&quot; is &quot;foo_bar&quot;).</p>
+
+</dd>
+<dt id="NUM"><i>NUM</i></dt>
+<dd>
+
+<p>A floating point number.</p>
+
+</dd>
+</dl>
+
+<h1 id="OUTPUT-FILES">OUTPUT FILES</h1>
+
+<h2 id="Identification-of-a-Maximum-Unrelated-Set">Identification of a Maximum Unrelated Set</h2>
+
+<dl>
+
+<dt id="Output-.dot-file"><b>Output .dot file</b></dt>
+<dd>
+
+<p>This file is used to visualize the family network as an undirected graph. The .dot files can be read into graph visualization software like Graphviz (http://www.graphviz.org). Each node is an individual from the dataset and each edge is a pairwise relationship above the specificied relatedness threshold.</p>
+
+</dd>
+<dt id="Networks-file"><b>Networks file</b></dt>
+<dd>
+
+<p>The (your_IBD_input_file)_networks within the results directory lists all pairwise relationships above the relatedness threshold and they are grouped by family network. The data in this file is exactly the same as your IBD input file except that PRIMUS added the first column that contains the network number assigned to each family network. These numbers are important because they match the network numbers of all the other result files, making this file useful as a look-up reference.</p>
+
+</dd>
+<dt id="Unrelated-set-files"><b>Unrelated set files</b></dt>
+<dd>
+
+<p>The maximum unrelated set file is in the main output directory as (your_IBD_input_file)_maximum_independent_set, and this is the largest unrelated set. There are 3 other related files: (your_IBD_input_file)_maximum_independent_set_PRIMUS/_KING/_PLINK. These are the results for all three algorithms used in PRIMUS for maximum unrelated set identification.</p>
+
+</dd>
+<dt id="network-IBD-files"><b>network IBD files</b></dt>
+<dd>
+
+<p>These IBD files exist for each family network and match the data from the IBD input file. If you also ran pedigree reconstruction, then these files will be in the respective network directories if you also ran pedigree reconstruction.</p>
+
+</dd>
+<dt id="unrelated_samples-file"><b>unrelated_samples file</b></dt>
+<dd>
+
+<p>File contains the FID and IID of all samples in the dataset that are unrelated to all other samples below the user defined relatedness threshold.</p>
+
+</dd>
+</dl>
+
+<h2 id="Pedigree-Reconstruction">Pedigree Reconstruction</h2>
+
+<dl>
+
+<dt id="Directory-Structure"><b>Directory Structure</b></dt>
+<dd>
+
+<p>In this documentation, the main results directory provided or the default *_PRIMUS/ directory is referred to as the dataset directory. This will contain the _networks file, the .dot files, and the network directory for each family network. The network directory contains all the results for the pedigree reconstruction of each family network. The network directory contains:</p>
+
+<pre><code>        network_IBD     The IBD estimates among only the samples in this family network
+        *.config file   The Settings used to run Cranefoot
+        *.cranefoot.fam Cranefoot&#39;s required input file format
+        *.fam           The six column file: FID, IID, FATHER, MOTHER, SEX, and AFFECTION_STATUS
+        *.ps            A post-script image of the pedigree drawn with Cranefoot
+        Summary_*_pairwise_table.txt    Summary file describing the all possible relationships between each pair of individuals based on all possible reconstructed pedigrees.
+        Summary_*.txt   Summary file of the pedigree reconstruction of the family network.
+        </code></pre>
+
+</dd>
+<dt id="fam-files-IBD_FILE-_network-_-.ps"><b>.fam files ([IBD_FILE]_network#_#.ps)</b></dt>
+<dd>
+
+<p>This file format is commonly used with the program PLINK. It contains the necessary information to reconstruction a pedigree. PRIMUS fills gaps in the pedigree with missing individuals and those are also represented in this file. There are six tab separated columns: FID, IID, FATHER, MOTHER, SEX, and AFFECTION_STATUS. The FID matches the network number and the IID is the merge of the original FID and IID read in from the IBD estimates file.</p>
+
+</dd>
+<dt id="Pedigree-image-files-IBD_FILE-_network-_-.ps"><b>Pedigree image files ([IBD_FILE]_network#_#.ps)</b></dt>
+<dd>
+
+<p>This is a post-script image file of the pedigree generated by Cranefoot. This can be opened by any program capable of reading post-script files. The drawn pedigrees follow general pedigree drawing practices: male = square, female = circle, 3/4 shading = affected, and diagonal lines mean that the individual is missing from the input dataset but needed to draw the complete pedigree. If ages are provided, they are placed after the individual&#39;s name. Cranefoot is unique in that it represents complex or difficult to draw pedigrees by separating out branches of the pedigree and drawing the same individual more than once. You can identify the individuals drawn more than once by the colored, arching lines connecting them. Feel free to read the data into your favorite pedigree drawing software if Cranefoot does not fit your taste.</p>
+
+</dd>
+<dt id="Network-summary-files-Summary_-IBD_FILE-_network-.txt"><b>Network summary files (Summary_[IBD_FILE]_network#.txt)</b></dt>
+<dd>
+
+<p>The network summary file contains basic summary statistics for the entire network at the top of the file, and each line is preceded with &quot;## &quot;. These statistics include the network name, number of pedigrees that fit the data, the number of pedigrees that are not flagged due to incompatibilities with provided ages, the number of samples in the network, the score range statistics of all the possible pedigrees, the number of pedigrees with the highest score, and the sample names in the network.</p>
+
+<p>The file then has information for each reconstructed pedigree: PRIMUS-assigned pedigree id number, number of missing (dummy) individuals added to the pedigree to complete it, the number of generations that had to be sampled given the pedigree structure, the relative scoring of the pedigree based on how well the relationships in the pedigree fit the input data, and the pairwise relationships within this pedigree that contradict the provided ages. If no ages are provided or if there are no incompatibilities, the last column will be empty. The score column will be between 0 and 1 and is the average likelihood of each relationship used in the formation of the pedigree calculated from PRIMUS&#39;s KDE.</p>
+
+</dd>
+<dt id="Dataset-summary-files-Summary_-IBD_FILE-.txt"><b>Dataset summary files (Summary_[IBD_FILE].txt)</b></dt>
+<dd>
+
+<p>The Dataset summary file first provides the dataset name and the number of family networks in the dataset. Next, it contains the network summary statistics (those preceded by &quot;## &quot; in the network summary file) from each family network in the dataset.</p>
+
+</dd>
+<dt id="Pairwise-relationship-summary-file-Summary_-IBD_FILE-_pairwise_table.txt"><b>Pairwise relationship summary file (Summary_[IBD_FILE]_pairwise_table.txt)</b></dt>
+<dd>
+
+<p>This white space separated file summarizes the possible pairwise relationships between all the samples in the dataset based on the possible reconstructed pedigrees.</p>
+
+</dd>
+</dl>
+
+<h1 id="QUICK-START">QUICK START</h1>
+
+<p>There are several example datasets in the <i>PRIMUS_v*/example_data/</i> directory. Here I will show you how to use several of the more common functionalities and options of PRIMUS. Run each example from the bin directory or adjust the file paths accordingly. Example 5 only works with the full version of PRIMUS:</p>
+
+<p>Example 1. Read in PLINK&#39;s .genome file</p>
+
+<ul>
+
+<p><b>./run_PRIMUS.pl</b> <b>--plink</b> <i>../example_data/complete.genome</i></p>
+
+<p>This command will run both parts of PRIMUS on the IBD estimates in <i>complete.genome</i> and the results should be in <i>../example_data/complete.genome_PRIMUS/</i> These data make up a single family network of 12 individuals. The resulting pedigree should not have any missing individuals. The maximum unrelated set should contain 6 individuals.</p>
+
+</ul>
+
+<p>Example 2. Read in sex and affection status information</p>
+
+<ul>
+
+<p><b>./run_PRIMUS.pl</b> <b>--plink</b> <i>../example_data/complete.genome</i> <b>--sex_file</b> <i>../example_data/complete.sex</i> <b>--affections</b> FILE=<i>../example_data/complete.fam</i> AFFECTION=6 AFFECTION_VALUE=1</p>
+
+<p>The <b>--sex_file</b> option is straight forward because we just pass the <i>complete.sex</i> file that matches the default 3-column format (FID = column 1; IID = column 2; SEX = column 3). Maybe you noticed this <i>complete.sex</i> file does not have a file header; don&#39;t worry, it doesn&#39;t matter if these files have headers or not. Alternatively, you could have used <b>--sexes</b> FILE=<i>../example_data/complete.sex</i> SEX=3 because this is the same as the command used above.</p>
+
+<p>The affection option is a little more complicated, because the <i>complete.fam</i> file does not have the affection status in the default third column nor is the affection status value the default 2. We cannot use the <b>--affection_file</b> option; rather we have to use the <b>--affections</b> option and specify the columns. To do so, you must first specify the FILE=<i>../example/complete.fam</i>. Next, you must specify the affection status column (the 6th column of the <i>complete.fam</i> file) using the AFFECTION=6 command. Finally, affection status in this file is specified with the number 1, so AFFECTION_VALUE=1 does the trick. These results from this run likely overwrote the results from Example 1. The difference will be that the resulting pedigrees images will include the correct sex symbol for all individuals as well as shading for the affected individuals and the reconstructed .fam files will also include sex and affection status in the 5th and 6th columns respectively.</p>
+
+</ul>
+
+<p>Example 3. Only reconstruct pedigrees for an incomplete dataset</p>
+
+<ul>
+
+<p><b>./run_PRIMUS.pl</b> <b>--plink</b> <i>../example_data/incomplete.genome</i> <b>--sexes</b> FILE=<i>../example_data/complete.fam</i> SEX=5 <b>--affections</b> FILE=<i>../example_data/complete.fam</i> AFFECTION=6 AFFECTION_VALUE=1 <b>--no_IMUS</b></p>
+
+<p>This run is very similar to Example 2, except now it is calling <i>incomplete.genome</i> and using the sex column from the <i>complete.fam</i> file instead of the <i>complete.sex</i> file. The <i>incomplete.genome</i> file is the same family as <i>complete.genome</i> except with 5 individuals removed (id2, id5, id7, id8, and id9). It is ok that the sex and affection status files contain all individuals, the ones not included in the <i>incomplete.genome</i> file will be ignored. The only addition to the command line is the <b>--no_IMUS</b> option which will only run pedigree reconstruction and not identify a maximum unrelated set.</p>
+
+<p>This particular run of PRIMUS produces a single pedigree that looks identical to the complete pedigree in examples 1 and 2, except it fills in the missing individuals with a &quot;Missing#&quot; place-holder. However, if you use the --int_likelihood_cutoff 0.08 instead of the default of 0.1, PRIMUS will reconstruct three possible pedigrees. The main difference between the three possible pedigrees is that ID11 and ID12 are unrelated in pedigree0 and are 3rd degree relatives in the other two pedigrees. The likelihood vector results show that it is more likely that ID12 and ID11 are more distantly related than 3rd degree relatives so that pedigree has a high score in the summary file than the other two pedigrees. Since we dropped the --int_likelihood_cutoff option below the likelihood that ID11 and ID12 are cousins, PRIMUS attempts to reconstruct the pedigree setting ID11 and ID12 as distantly related and as 3rd degree relatives.</p>
+
+</ul>
+
+<p>Example 4. Reconstruct a HapMap3/1K genomes MEX family using fake ages that produced several possible pedigrees</p>
+
+<ul>
+
+<p><b>./run_PRIMUS.pl</b> <b>--plink</b> <i>../example_data/1K_genomes_MEX_family.genome</i> <b>--sex_file</b> <i>../example_data/1K_genomes_MEX_family.features</i> <b>--ages</b> FILE=<i>../example_data/1K_genomes_MEX_family.features</i> AGE=4</p>
+
+<p>This dataset includes 3 trios and another individual unreported to be related within the original HapMap3 and 1K genomes releases. It reconstructs to 4 possible pedigrees. I fabricated ages for the samples to illustrate the effectiveness of PRIMUS at flagging pedigrees that do not match the supplied ages. Look at <i>PRIMUS_v*/example_data/1K_genomes_MEX_family.genome_PRIMUS/1K_genomes_MEX_family.genome_network1/Summary_1K_genomes_MEX_family.genome_network1.txt</i> will summarize the pedigree results.</p>
+
+</ul>
+
+<p>Example 5. Calculate IBD estimates using the PLINK IBD pipeline, and then reconstruct the pedigrees (Does not run with lite version of PRIMUS)</p>
+
+<ul>
+
+<p><b>./run_PRIMUS.pl</b> <b>--file</b> <i>../example_data/MEX_pop</i> <b>--genome</b> <b>--sexes</b> FILE=<i>../example_data/MEX_pop.fam</i> SEX=6</p>
+
+<p>NOTE: This run requires that you have PLINK, R, and EIGENSTRAT (specifically smartpca) installed on your machine and in your PATH environment variable. If PLINK and smartpca are installed but are not in your path, then you will need to use the --plink_ex PATH/TO/EXECUTABLE/plink and --smartpca_ex PATH/TO/EXECUTABLE/smartpca options.</p>
+
+<p>If you do not specify a reference popluation, then PRIMUS will automatically select the best HapMap3 reference population for your data. If you would like to have PRIMUS not automatically select these populations, then use the --no_automatic_IBD option, --internal_ref, or --alt_ref options.</p>
+
+<p>This dataset is the same as in example 4, above. Look at <i>PRIMUS_v*/example_data/1K_genomes_MEX_family.genome_PRIMUS/1K_genomes_MEX_family.genome_network1/Summary_1K_genomes_MEX_family.genome_network1.txt</i> contains the summary of the pedigree results.</p>
+
+</ul>
+	
+	</div>
+
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+
+	<footer id="footer" class="footer">
+	</footer>
+	<script>createFooter()</script>
+</body>
+
+
+
+</html>

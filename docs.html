@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- META -->
+  <title>COMPADRE Documentation</title>
+  <meta charset='UTF-8' />
+  <meta name='author' content='Below Lab'>
+  <meta property="og:title" content="COMPADRE Documentation">
+  <meta property='og:description' content='COMPADRE Documentation'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- TWITTER -->
+  <link rel="shortcut icon" href="https://i.imgur.com/VPEX5z6.jpg">
+  <meta property="og:image" content="images/social.jpg">
+  <meta property="og:video" content="images/social.jpg">
+  <meta property="og:photo" content="images/social.jpg">
+
+  <!-- STYLE -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Helvetica+Neue" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white bg-cover">
+
+  <nav class="fixed top-0 left-0 w-full z-10 bg-transparent shadow-lg">
+    <div class="px-4 py-4 max-w-6xl mx-auto flex justify-between items-center">
+      <!-- <a href="https://www.compadre.dev/" class="text-6xl mt-[-12px] text-black flex-grow md:flex-grow-0"><img src="dna_vector.png" alt="compadre" width="40" height="40"></a> -->
+      <p class="text-center text-2xl text-black font-bold font-sans align-items md:mr-48 ml-4"><a href="https://compadre.dev">COMPADRE Documentation</a></p>
+      <div class="hidden md:flex justify-center space-x-8">
+        <a href="https://compadre.dev/about" class="text-lg text-black font-medium hover:text-gray-700">About</a>
+        <a href="https://compadre.dev/docs" class="text-lg text-black font-medium hover:text-gray-700">Documentation</a>
+        <a href="https://github.com/belowlab/compadre" target="_blank" rel="noopener noreferrer" class="text-lg text-black font-medium hover:text-gray-700">Download</a>
+        <a href="mailto:contact@compadre.dev" class="text-lg text-black font-medium hover:text-gray-700">Contact</a>
+      </div>
+      <button class="md:hidden text-black" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden bg-white shadow-md">
+      <ul class="text-center">
+        <li><a href="https://compadre.dev/about" class="block py-4 text-black hover:bg-gray-100">About</a></li>
+        <li><a href="https://compadre.dev/docs" class="block py-4 text-black hover:bg-gray-100">Documentation</a></li>
+        <li><a href="https://github.com/belowlab/compadre" target="_blank" rel="noopener noreferrer" class="block py-4 text-black hover:bg-gray-100">Download</a></li>
+        <li><a href="mailto:contact@compadre.dev" class="block py-4 text-black hover:bg-gray-100">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- BG GRADIENT -->
+  <div class="landing-wrapper bg-no-repeat overflow-auto w-screen h-screen">
+    <p class="text-center text-4xl md:text-6xl font-black font-sans text-transparent bg-clip-text bg-gradient-to-r from-pink-700 via-pink-400 to-violet-700 mt-32 md:mt-48 items-center p-2">COMPADRE Documentation</p>
+    <!-- <p class="text-center text-4xl md:text-6xl font-black font-sans text-black items-center">is <br>at biobank scale.</p> -->
+
+    <!-- BOX 1 -->
+    <div class="flex items-center justify-center">
+      <div class="container mx-auto h-full flex justify-center">
+        
+        <section id="options" class="my-12 px-4">
+          <h2 class="text-3xl text-center font-bold mb-6">Command-Line Options</h2>
+          <div class="bg-gray-100 p-6 rounded shadow overflow-auto">
+            <pre class="text-sm font-mono whitespace-pre-wrap">
+For usage and documentation:
+  -h, --help           Brief help message
+  --man                Full documentation
+
+COMPADRE computation (new)
+  --segment_data       Shared segments data in ERSA format
+  --port_number        Port number for additional Python computation (default: 6000)
+
+Required for prePRIMUS, IMUS, and PR (one of the following):
+  -p, --plink_ibd      Specify path to a .genome IBD estimates file produced by PLINK
+  -i, --input          Specify path to an IBD estimates file and additional column information
+  
+  (or both):
+  --file               Path to PLINK formatted data without file extensions;
+                       behaves like PLINK's --file (requires --genome)
+  --genome             Read in the --file and calculate IBD estimates using PLINK
+
+General options:
+  -t, --rel_threshold  Set the minimum relatedness for two people (default = 0.1)
+  --degree_rel_cutoff  Set the maximum degree of relatedness (default = 3)
+  -o, --output_dir     Specify the output directory for results 
+                       (default = [PATH_TO_IBD_FILE]_PRIMUS/)
+  -v, --verbose        Set verbosity level (0=none; 1=default; 2=more; 3=max)
+  
+prePRIMUS IBD estimation using PLINK (not included in lite version):
+  --file               Path to PLINK formatted data without file extensions;
+                       behaves like PLINK's --file (requires --genome)
+  --genome             Read in the specified PLINK data file and calculate IBD estimates
+                       using PLINK
+  --plink_ex           Path to the plink executable (searched in environment by default)
+  --smartpca_ex        Path to the EIGENSTRAT smartpca executable (searched in environment by default)
+  --ref_pops           Comma-separated list of HapMap3 populations for reference allele freqs
+                       (overrides default method)
+  --no_automatic       Turn off automatic selection of HapMap3 populations for reference allele freqs
+  --remove_AIMs        Automatically remove ancestry informative markers (default: off)
+  --keep_AIMs          Do not remove ancestry informative markers (default: off)
+  --internal_ref       Use the dataset in --file to get reference allele frequencies
+  --alt_ref_stem       Path to PLINK formatted data (without file extensions) for allele frequencies
+  --no_PCA_plot        Do not run smartpca or generate the PCA plot
+  --keep_inter_files   Keep intermediate files used to create the IBD estimates with prePRIMUS
+
+Identification of maximum unrelated set options:
+  --no_IMUS            Do not identify a maximum unrelated set (IMUS runs by default)
+  --missing_val        Set value that denotes missing data in the IBD file
+  -s, --size           Weight on set size (default unless a binary trait is specified first)
+  --high_btrait        File with FID, IID, and binary trait for higher value weighting
+  --low_btrait         File with FID, IID, and binary trait for lower value weighting
+  --high_qtrait        File with FID, IID, and quantitative trait for higher value weighting
+  --low_qtrait         File with FID, IID, and quantitative trait for lower value weighting
+  --mean_qtrait        File with FID, IID, and quantitative trait for weighting toward the mean value
+  --tails_qtrait       File with FID, IID, and quantitative trait for weighting against middle values
+
+Pedigree reconstruction options:
+  --no_PR              Do not reconstruct pedigrees (pedigree reconstruction runs by default)
+  --max_gens           Maximum number of generations sampled in reconstructed pedigrees (default = no limit)
+  --max_gen_gap        Maximum number of generations between two people having a child (default = 0)
+  --age_file           Specify path to the file containing the age of each sample
+  --ages               Like --age_file but requires FILE=[file] with optional column specification
+  --sex_file           Specify path to the file containing the sex of each sample
+  --sexes              Like --sex_file but requires FILE=[file] with optional column specification
+  --mito_matches       Path to mito matching status for each sample pair (requires FILE=[file])
+  --y_matches          Path to y matching status for each sample pair (requires FILE=[file])
+  --MT_error_rate      Proportion of the MT sequence that must not match to be called a non-match
+  --Y_error_rate       Proportion of the Y sequence that must not match to be called a non-match
+  --affection_file     Specify path to the file containing the affection status of each sample
+  --affections         Like --affection_file; requires FILE=[file] with optional column specification
+  --int_likelihood_cutoff  Initial minimum likelihood for a relationship (default = 0.1)
+
+PADRE options:
+  --run_padre          Run PADRE after standard reconstruction is complete
+            </pre>
+          </div>
+        </section>
+        
+      </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer class="footer bg-white fixed bottom-0 w-full text-center">
+      <div class="footer-bottom py-4 md:py-6">
+        <div class="copyright">
+          <p class="font-sans">Made with ❤️ by <a href='https://thebelowlab.com/?ref=compadre' target="_blank">Below Lab</a> © 
+            <script type="text/javascript">document.write(new Date().getFullYear());</script></a></p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+  </script>
+  
+</body>
+
+</html>
