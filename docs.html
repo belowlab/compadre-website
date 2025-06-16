@@ -63,73 +63,68 @@
           <div class="bg-gray-100 p-6 rounded shadow overflow-auto">
             <pre class="text-sm font-mono whitespace-pre-wrap">
 For usage and documentation:
-  -h, --help           Brief help message
-  --man                Full documentation
+  -h, --help		Brief help message
+  --man            Full documentation
 
-COMPADRE computation (new)
-  --segment_data       Shared segments data in ERSA format
-  --port_number        Port number for additional Python computation (default: 6000)
-
-Required for prePRIMUS, IMUS, and PR (one of the following):
-  -p, --plink_ibd      Specify path to a .genome IBD estimates file produced by PLINK
-  -i, --input          Specify path to an IBD estimates file and additional column information
+Required options (one of the following):
+  -p, --plink_ibd	Specify path to a .genome IBD estimates file produced by PLINK
+  -i, --input		Specify path to an IBD estimates file and additional column information
   
   (or both):
-  --file               Path to PLINK formatted data without file extensions;
-                       behaves like PLINK's --file (requires --genome)
-  --genome             Read in the --file and calculate IBD estimates using PLINK
+  --file 		Path to PLINK formatted data without the file extensions; behaves the same as in PLINK (requires --genome)
+  --genome		Read in --file and calculate IBD estimates using PLINK
+
+COMPADRE options (new):
+  --segment_data       Shared segments data in format readable by ERSA (see full documentation)
+  --port_number        Port number for additional Python computation (default: 6000)
+  --run_padre			Run PADRE after standard pedigree reconstruction is complete
 
 General options:
-  -t, --rel_threshold  Set the minimum relatedness for two people (default = 0.1)
-  --degree_rel_cutoff  Set the maximum degree of relatedness (default = 3)
-  -o, --output_dir     Specify the output directory for results 
-                       (default = [PATH_TO_IBD_FILE]_PRIMUS/)
-  -v, --verbose        Set verbosity level (0=none; 1=default; 2=more; 3=max)
-  
-prePRIMUS IBD estimation using PLINK (not included in lite version):
-  --file               Path to PLINK formatted data without file extensions;
-                       behaves like PLINK's --file (requires --genome)
-  --genome             Read in the specified PLINK data file and calculate IBD estimates
-                       using PLINK
-  --ref_pops           Comma-separated list of 1000 Genomes populations for reference allele freqs
-                       (overrides default method)
-  --no_automatic       Turn off automatic selection of 1000 Genomes populations for reference allele freqs
-  --remove_AIMs        Automatically remove ancestry informative markers (default: off)
-  --keep_AIMs          Do not remove ancestry informative markers (default: off)
-  --internal_ref       Use the dataset in --file to get reference allele frequencies
-  --alt_ref_stem       Path to PLINK formatted data (without file extensions) for allele frequencies
-  --no_PCA_plot        Do not run smartpca or generate the PCA plot
-  --keep_inter_files   Keep intermediate files used to create the IBD estimates with prePRIMUS
+  -t, --rel_threshold	Set the minimum level of relatedness for two people to be considered related (default=0.1)
+  --degree_rel_cutoff	Set the maximum degree of relatedness for two people to be considered related (default=3; i.e. 3rd degree relatives)
+  -o, --output_dir	Specify path to the output directory for all results(default=[PATH_TO_IBD_FILE]_PRIMUS/)
+  -v, --verbose	Set verbosity level (0=none; 1=default; 2=more; 3=max)
 
-Identification of maximum unrelated set options:
-  --no_IMUS            Do not identify a maximum unrelated set (IMUS runs by default)
-  --missing_val        Set value that denotes missing data in the IBD file
-  -s, --size           Weight on set size (default unless a binary trait is specified first)
-  --high_btrait        File with FID, IID, and binary trait for higher value weighting
-  --low_btrait         File with FID, IID, and binary trait for lower value weighting
-  --high_qtrait        File with FID, IID, and quantitative trait for higher value weighting
-  --low_qtrait         File with FID, IID, and quantitative trait for lower value weighting
-  --mean_qtrait        File with FID, IID, and quantitative trait for weighting toward the mean value
-  --tails_qtrait       File with FID, IID, and quantitative trait for weighting against middle values
+prePRIMUS IBD estimation options:
+  --file 		Path to PLINK formatted data without the file extensions; behaves the same as in PLINK (requires --genome)
+  --genome		Read in the specified PLINK formatted data file and calculate IBD estimates using PLINK
+  --plink_ex		Path to the plink executable file (searches environment variables by default)
+  --ref_pops		Comma separated list of 1000 Genomes populations used for reference allele freqs (overrides default method) 
+  --no_automatic	Turn off automatic selection of the HapMap3 populations for reference allele freqs (On by default)
+  --remove_AIMs	Automatically remove ancestry informative markers (off by default)
+  --keep_AIMs		Do not remove ancestry informative markers(off by default)
+  --internal_ref	Use the dataset provided in --file to get reference allele frequencies
+  --alt_ref_stem	Path to PLINK formatted data (no file extensions) used for allele frequencies
+  --keep_inter_files	Keep intermediate files used to create the IBD estimates with prePRIMUS
+  --min_pihat_threshold Set a minimum pi-hat threshold that will be used in the plink --genome calculation
+  --max_memory		Specify amount of memory to be used in PLINK prePRIMUS commands (in MB)
 
-Pedigree reconstruction options:
-  --no_PR              Do not reconstruct pedigrees (pedigree reconstruction runs by default)
-  --max_gens           Maximum number of generations sampled in reconstructed pedigrees (default = no limit)
-  --max_gen_gap        Maximum number of generations between two people having a child (default = 0)
-  --age_file           Specify path to the file containing the age of each sample
-  --ages               Like --age_file but requires FILE=[file] with optional column specification
-  --sex_file           Specify path to the file containing the sex of each sample
-  --sexes              Like --sex_file but requires FILE=[file] with optional column specification
-  --mito_matches       Path to mito matching status for each sample pair (requires FILE=[file])
-  --y_matches          Path to y matching status for each sample pair (requires FILE=[file])
-  --MT_error_rate      Proportion of the MT sequence that must not match to be called a non-match
-  --Y_error_rate       Proportion of the Y sequence that must not match to be called a non-match
-  --affection_file     Specify path to the file containing the affection status of each sample
-  --affections         Like --affection_file; requires FILE=[file] with optional column specification
-  --int_likelihood_cutoff  Initial minimum likelihood for a relationship (default = 0.1)
+Identification of maximum unrelated set (IMUS) options:
+  --no_IMUS		Don't identify a maximum unrelated set (runs IMUS by default)
+  --missing_val	Set value that denotes missing data in IBD file
+  -s, --size		Specify to weight on set size (Default unless a binary trait is specified first)
+  --high_btrait	File with FID, IID, and binary trait to weight for the higher value
+  --low_btrait		File with FID, IID, and binary trait to weight for the lower value
+  --high_qtrait	File with FID, IID, and quantitative trait to weight for higher values
+  --low_qtrait		File with FID, IID, and quantitative trait to weight for lower values
+  --mean_qtrait	File with FID, IID, and quantitative trait to weight towards the mean value
+  --tails_qtrait	File with FID, IID, and quantitative trait to weight against the middle values
 
-PADRE options:
-  --run_padre          Run PADRE after standard reconstruction is complete
+Pedigree reconstruction (PR) options:
+  --no_PR		Don't reconstruct pedigrees (runs pedigree reconstruction by default)
+  --max_gens		Max number of generations sampled in reconstructed pedigree (default = no limit)
+  --max_gen_gap	Max number of generations between two people that have a child (default = 0)
+  --age_file		Specify path to the file containing the age of each sample
+  --ages		Like --age_file but requires FILE=[file], optional specification of file columns
+  --sex_file		Specify path to the file containing the sex of each sample
+  --sexes		Like --sex_file but requires FILE=[file], optional specification of file columns
+  --mito_matches	Path to mito matching status for each pair of samples (requires FILE=[file])
+  --y_matches		Path to y matching status for each pair of samples (requires FILE=[file])
+  --MT_error_rate	Proportion of the MT sequence that must not match to be called a non-match
+  --Y_error_rate	Proportion of the Y sequence that must not match to be called a non-match
+  --affection_file	Specify path to the file containing the affection status of each sample
+  --affections		Like --affection_file; need FILE=[file], optional specification of file columns
+  --int_likelihood_cutoff	Initial minimum likelihood for a relationship to reconstruction (default = 0.1)
             </pre>
           </div>
         </section>
