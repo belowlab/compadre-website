@@ -61,113 +61,97 @@
         <section id="options" class="my-12 px-4">
           <h2 class="text-3xl text-center font-bold mb-6">Command-Line Options</h2>
           <div class="bg-gray-100 p-6 rounded shadow overflow-auto">
-            <pre class="text-sm font-mono whitespace-pre-wrap">
+            <pre class="text-sm font-mono whitespace-pre">
 For usage and documentation:
-  -h, --help		      Brief help message
+  -h, --help                   Brief help message
 
 Required options (one of the following):
-  -p, --plink_ibd     Specify path to a .genome IBD estimates file produced by PLINK
-  -i, --input         Specify path to an IBD estimates file and additional column information
-  
+  -p, --plink_ibd             Specify path to a .genome IBD estimates file produced by PLINK
+  -i, --input                 Specify path to an IBD estimates file and additional column information
+
   (or both):
-  --file              Path to PLINK formatted data without the file extensions; behaves the same as in PLINK (requires --genome)
-  --genome            Read in --file and calculate IBD estimates using PLINK
+  --file                      Path to PLINK formatted data without the file extensions (requires --genome)
+  --genome                    Read in --file and calculate IBD estimates using PLINK
 
 COMPADRE options (new):
-  --segment_data      Shared segments data in format readable by ERSA (see full documentation)
-  --port_number       Port number for additional Python computation (default: 6000)
-  --run_padre         Run PADRE after standard pedigree reconstruction is complete
+  --segment_data              Shared segments data in format readable by ERSA
+  --port_number               Port number for additional Python computation (default: 6000)
+  --run_padre                 Run PADRE after standard pedigree reconstruction is complete
 
 General options:
-  -t, --rel_threshold	Set the minimum level of relatedness for two people to be considered related (default=0.1)
-  --degree_rel_cutoff	Set the maximum degree of relatedness for two people to be considered related (default=3; i.e. 3rd degree relatives)
-  -o, --output_dir	  Specify path to the output directory for all results(default=[PATH_TO_IBD_FILE]_PRIMUS/)
-  -v, --verbose	      Set verbosity level (0=none; 1=default; 2=more; 3=max)
+  -t, --rel_threshold         Set the minimum level of relatedness for two people to be considered related (default: 0.1)
+  --degree_rel_cutoff         Set the maximum degree of relatedness to be considered related (default: 3)
+  -o, --output_dir            Specify path to output directory for results (default: [PATH_TO_IBD_FILE]_PRIMUS/)
+  -v, --verbose               Set verbosity level (0=none; 1=default; 2=more; 3=max)
 
 prePRIMUS IBD estimation options:
-  --file 		          Path to PLINK formatted data without the file extensions; behaves the same as in PLINK (requires --genome)
-  --genome		        Read in the specified PLINK formatted data file and calculate IBD estimates using PLINK
-  --plink_ex		      Path to the plink executable file (searches environment variables by default)
-  --ref_pops		      Comma separated list of 1000 Genomes populations used for reference allele freqs (overrides default method) 
-  --no_automatic	    Turn off automatic selection of the HapMap3 populations for reference allele freqs (on by default)
-  --remove_AIMs	      Automatically remove ancestry informative markers (off by default)
-  --keep_AIMs		      Do not remove ancestry informative markers(off by default)
-  --internal_ref	    Use the dataset provided in --file to get reference allele frequencies
-  --alt_ref_stem	    Path to PLINK formatted data (no file extensions) used for allele frequencies
-  --keep_inter_files	Keep intermediate files used to create the IBD estimates with prePRIMUS
-  --min_pihat_threshold Set a minimum pi-hat threshold that will be used in the plink --genome calculation
-  --max_memory		    Specify amount of memory to be used in PLINK prePRIMUS commands (in MB)
+  --file                      Path to PLINK formatted data (requires --genome)
+  --genome                    Calculate IBD estimates using PLINK
+  --plink_ex                  Path to the plink executable file
+  --ref_pops                  Comma-separated 1000 Genomes populations for allele freqs
+  --no_automatic              Disable automatic selection of reference allele freqs
+  --remove_AIMs               Remove ancestry informative markers (off by default)
+  --keep_AIMs                 Keep ancestry informative markers (off by default)
+  --internal_ref              Use --file dataset for reference allele freqs
+  --alt_ref_stem              Path to PLINK formatted data used for allele freqs
+  --keep_inter_files          Keep intermediate files
+  --min_pihat_threshold       Minimum pi-hat threshold for --genome calculation
+  --max_memory                Memory (MB) to use in prePRIMUS PLINK commands
 
-Identification of maximum unrelated set (IMUS) options:
-  --no_IMUS		        Don't identify a maximum unrelated set (runs IMUS by default)
-  --missing_val	      Set value that denotes missing data in IBD file
-  -s, --size		      Specify to weight on set size (Default unless a binary trait is specified first)
-  --high_btrait	      File with FID, IID, and binary trait to weight for the higher value
-  --low_btrait		    File with FID, IID, and binary trait to weight for the lower value
-  --high_qtrait	      File with FID, IID, and quantitative trait to weight for higher values
-  --low_qtrait		    File with FID, IID, and quantitative trait to weight for lower values
-  --mean_qtrait	      File with FID, IID, and quantitative trait to weight towards the mean value
-  --tails_qtrait	    File with FID, IID, and quantitative trait to weight against the middle values
+IMUS (maximum unrelated set) options:
+  --no_IMUS                   Do not run IMUS (default: run)
+  --missing_val               Missing data marker in IBD file
+  -s, --size                  Weight on set size
+  --high_btrait               Binary trait file to weight higher values
+  --low_btrait                Binary trait file to weight lower values
+  --high_qtrait               Quantitative trait file to weight higher values
+  --low_qtrait                Quantitative trait file to weight lower values
+  --mean_qtrait               Quantitative trait file to weight toward mean
+  --tails_qtrait              Quantitative trait file to weight against middle values
 
 Pedigree reconstruction (PR) options:
-  --no_PR		          Don't reconstruct pedigrees (runs pedigree reconstruction by default)
-  --max_gens		      Max number of generations sampled in reconstructed pedigree (default = no limit)
-  --max_gen_gap	      Max number of generations between two people that have a child (default = 0)
-  --age_file		      Specify path to the file containing the age of each sample
-  --ages		          Like --age_file but requires FILE=[file], optional specification of file columns
-  --sex_file		      Specify path to the file containing the sex of each sample
-  --sexes		          Like --sex_file but requires FILE=[file], optional specification of file columns
-  --mito_matches	    Path to mito matching status for each pair of samples (requires FILE=[file])
-  --y_matches		      Path to y matching status for each pair of samples (requires FILE=[file])
-  --MT_error_rate	    Proportion of the MT sequence that must not match to be called a non-match
-  --Y_error_rate	    Proportion of the Y sequence that must not match to be called a non-match
-  --affection_file	  Specify path to the file containing the affection status of each sample
-  --affections		    Like --affection_file; need FILE=[file], optional specification of file columns
-  --int_likelihood_cutoff	Initial minimum likelihood for a relationship to reconstruction (default = 0.1)
+  --no_PR                     Skip pedigree reconstruction
+  --max_gens                  Max generations in pedigree (default: no limit)
+  --max_gen_gap               Max generations between parents and children (default: 0)
+  --age_file                  File with sample ages
+  --ages                      Like --age_file, requires FILE=[file]
+  --sex_file                  File with sample sex
+  --sexes                     Like --sex_file, requires FILE=[file]
+  --mito_matches              File with mitochondrial match status
+  --y_matches                 File with Y chromosome match status
+  --MT_error_rate             Max MT mismatch proportion to call a match
+  --Y_error_rate              Max Y mismatch proportion to call a match
+  --affection_file            File with affection status per sample
+  --affections                Like --affection_file, requires FILE=[file]
+  --int_likelihood_cutoff     Minimum likelihood for relationships (default: 0.1)
 
 ERSA options:
-  --min_cm			      minimum segment size to consider [default: 2.5]
-  --max_cm			      maximum segment size to consider for estimating the exponential distribution of 
-   				            segment sizes in the population [default: 10.0]
-  --max_meioses		    maximum number of meioses to consider [default: 40]
-  --rec_per_meioses		expected number of recombination events per meioses [default: 35.2548101]	
-  --ascertained_chromosome	chromosome number of ascertained disease locus (int)
-  --ascertained_position	  chromosomal position of ascertained disease locus (int)
-  --control_files		  GERMLINE or Beagle fibd output file(s) for population control
-  --control_sample_size	    Sample size of control population. Used with --control_files
-  --exp_mean			    Mean of exp distribution of shared segment size in population [default: 3.197036753]
-  --pois_mean			    Mean of the Poisson distribution of the number of segments shared between 
-				              a pair of individuals in the population [default: 13.73]
-  --pair_file			    Restrict pairwise comparisons to the ID pairs specified in this file
-  --single_pair		    Restrict pairwise comparisons to the pairs specified in this flag (id1:id2)
-  --number_of_ancestors	    Restrict relationships to [1] one parent (half-sibs/cousins), 
-   				                  [2] two parents (full-sibs/cousins), or [0] (parent-offspring/grandparent-granchild).
-  --number_of_chromosomes	  Number of chromosomes [default: 22]
-  --parent_offspring_option	Option to evaluate potential parent-offspring and sibling relationships 
-   				                  based on total proportion of the genome that is shared ibd1 [default: true]
-  --parent_offspring_zscore	Z-score for rejecting a sibling relationship in favor of a parent-offspring 
-   				                  relationship [default: 2.33, alpha=0.01] 
-  --adjust_pop_dist		Option to adjust the population distribution of shared segments downward 
-   				            for segments that could not be detected due to recent ancestry [default: false]
-  --confidence_level		    Confidence level for confidence interval around the estimated degree 
-   				                  of relationship. [default: 0.95]
-  --mask_common_shared_regions  Excludes chromosomal regions that are commonly shared from evaluation.
-   				                      Used only when the control_files or mask_region_file parameter is specified 
-                                [default: false].
-  --mask_region_cross_length	  Length in base pairs that a shared segment must extend past a masked segment 
-   				                      in order to avoid truncation. Used only when mask_common_shared_regions 
-                                parameter is specified [default: 1000000].
-  --mask_region_file		        File containing chromosomal regions to exclude from evaluation.
-  --mask_region_threshold	      Threshold for the ratio of observed vs. expected segment sharing in controls 
-   				                      before a region will be masked.
-  --mask_region_sim_count	      Number of simulations performed of the null distribution of shared 
-   				                      segment locations in controls; results written to output_file.sim
-  --recombination_files	        File containing genetic distances for all chromosomes. This parameter must be 
-   				                      specified with Beagle fibd input files
-  --beagle_markers_files	      Beagle marker files (one file required for each chromosome, wildcards required, 
-   				                      ex: chr*beagle.marker). Each filename must begin with the chromosome name 
-                                followed by a period. This parameter must be specified with Beagle fibd input files
-            </pre>
+  --min_cm                    Minimum segment size (default: 5 cM)
+  --max_cm                    Max segment size for exponential distribution (default: 10.0)
+  --max_meioses               Max meioses to consider (default: 40)
+  --rec_per_meioses           Expected recombinations per meioses (default: 35.2548101)
+  --ascertained_chromosome    Chromosome number of disease locus
+  --ascertained_position      Position of disease locus
+  --control_files             GERMLINE or Beagle fibd files for population control
+  --control_sample_size       Control sample size
+  --exp_mean                  Mean of exponential segment size distribution (default: 3.197036753)
+  --pois_mean                 Mean Poisson distribution of segment count (default: 13.73)
+  --pair_file                 Restrict pairwise comparisons to IDs in this file
+  --single_pair               Restrict comparisons to a single pair (id1:id2)
+  --number_of_ancestors       Limit to 0/1/2 parents (default varies)
+  --number_of_chromosomes     Number of chromosomes (default: 22)
+  --parent_offspring_option   Evaluate PO/sibling based on IBD1 (default: true)
+  --parent_offspring_zscore   Z-score threshold for sibling vs PO (default: 2.33)
+  --adjust_pop_dist           Adjust for recent ancestry (default: false)
+  --confidence_level          CI level around estimated relationship (default: 0.95)
+  --mask_common_shared_regions  Mask common regions (default: false)
+  --mask_region_cross_length  Segment length past mask to avoid truncation (default: 1000000)
+  --mask_region_file          File of masked chromosomal regions
+  --mask_region_threshold     Observed vs. expected segment sharing ratio threshold
+  --mask_region_sim_count     Simulations for null sharing distribution
+  --recombination_files       Genetic distances (required with Beagle input)
+  --beagle_markers_files      Beagle marker files, one per chromosome (ex: chr*beagle.marker)
+</pre>
           </div>
         </section>
         
